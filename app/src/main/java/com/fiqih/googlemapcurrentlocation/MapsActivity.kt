@@ -3,6 +3,7 @@ package com.fiqih.googlemapcurrentlocation
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
@@ -20,6 +21,7 @@ class MapsActivity : AppCompatActivity() {
 
     private lateinit var mMap: GoogleMap
     private var fromLocationClient: FusedLocationProviderClient? = null
+    private lateinit var currentAddress : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,9 +83,11 @@ class MapsActivity : AppCompatActivity() {
                                         var currentLocation = it.result
                                         var currentLatitude = currentLocation.latitude
                                         var currentLongitude = currentLocation.longitude
-
+                                        var geocoder = Geocoder(this@MapsActivity)
+                                        var geocoderResult = geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)
+                                        currentAddress = geocoderResult[0].getAddressLine(0)
                                         var myLocation = LatLng(currentLatitude, currentLongitude)
-                                        mMap.addMarker(MarkerOptions().position(myLocation).title("Posisi")).showInfoWindow()
+                                        mMap.addMarker(MarkerOptions().position(myLocation).title(currentAddress)).showInfoWindow()
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,15f))
                                     }
