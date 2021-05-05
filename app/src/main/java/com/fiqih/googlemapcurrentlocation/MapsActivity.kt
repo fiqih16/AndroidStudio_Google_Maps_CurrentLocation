@@ -77,8 +77,9 @@ class MapsActivity : AppCompatActivity() {
                                         var geocoderResult = geocoder.getFromLocation(currentLocation.latitude, currentLocation.longitude, 1)
                                         currentAddress = geocoderResult[0].getAddressLine(0)
                                         var myLocation = LatLng(currentLatitude, currentLongitude)
+                                        mMap.clear()
                                         mMap.addMarker(MarkerOptions().position(myLocation).title(currentAddress)).showInfoWindow()
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
+//                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16f))
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,15f))
                                     }
                                 }
@@ -93,5 +94,3 @@ class MapsActivity : AppCompatActivity() {
     }
 
 }
-//dah kelar boss
-// hehe
